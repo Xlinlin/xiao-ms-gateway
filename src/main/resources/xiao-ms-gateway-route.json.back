@@ -1,0 +1,15 @@
+[
+  {
+    "id": "ms-graceful-shutdown-demo",
+    "order": 1,
+    "predicates": [
+      {
+        "args": {
+          "pattern": "/api/nacos/**"
+        },
+        "name": "Path"
+      }
+    ],
+    "uri": "lb://xiao-ms-graceful-shutdown-demo"
+  }
+]

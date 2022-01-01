@@ -1,0 +1,59 @@
+server:
+  port: 7778
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  profiles:
+    active: ${SPRING_PROFILES:dev}
+  application:
+    name: xiao-ms-gateway
+  cloud:
+    nacos:
+      config:
+        file-extension: yml
+        namespace: ${NACOS_NAMESPACE:43f2c792-77bc-421a-94c5-b847ea10b2df}
+      username: ${NACOS_USERNAME:nacos}
+      password: ${NACOS_PASSWORD:nacos}
+      server-addr: ${NACOS_SERVER_ADDR:http://192.168.5.8:8848}
+      discovery:
+        namespace: ${NACOS_NAMESPACE:43f2c792-77bc-421a-94c5-b847ea10b2df}
+        group: ${NACOS_GROUP:DEFAULT_GROUP}
+    sentinel:
+      transport:
+        dashboard: ${SENTINEL_SERVER_ADDR:http://192.168.5.8:7779}
+        port: ${SENTINEL_CLIENT_PORT:8721}
+      datasource:
+        gw-flow:
+          nacos:
+            server-addr: ${NACOS_SERVER_ADDR:http://192.168.5.8:8848}
+            # 在修改的sentinel 源码中定义的规则名
+            dataId: ${spring.application.name}-gw-flow-rules
+            groupId: ${NACOS_GROUP:DEFAULT_GROUP}
+            namespace: ${NACOS_NAMESPACE:43f2c792-77bc-421a-94c5-b847ea10b2df}
+            data-type: json
+            rule-type: gw-flow
+        gw-api-group:
+          nacos:
+            server-addr: ${NACOS_SERVER_ADDR:http://192.168.5.8:8848}
+            # 在修改的sentinel 源码中定义的规则名
+            dataId: ${spring.application.name}-gw-api-group-rules
+            groupId: ${NACOS_GROUP:DEFAULT_GROUP}
+            namespace: ${NACOS_NAMESPACE:43f2c792-77bc-421a-94c5-b847ea10b2df}
+            data-type: json
+            rule-type: gw-api-group
+        gw-system:
+          nacos:
+            server-addr: ${NACOS_SERVER_ADDR:http://192.168.5.8:8848}
+            # 在修改的sentinel 源码中定义的规则名
+            dataId: ${spring.application.name}-system-rules
+            groupId: ${NACOS_GROUP:DEFAULT_GROUP}
+            namespace: ${NACOS_NAMESPACE:43f2c792-77bc-421a-94c5-b847ea10b2df}
+            data-type: json
+            rule-type: system
+  #inetutils:
+  #  preferred-networks: ${PREFERRED_NETWORKS:192.168.0}
+
+
+logging:
+  config: classpath:logback-xiao.xml
